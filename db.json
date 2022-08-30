@@ -1,0 +1,32 @@
+ [
+    {"id": 124,
+    "product": {
+        "productName": "HP FOLIO",
+        "productSpec": "Core i5",
+        "price": 700.5,
+        "currency": "$",
+        "type": "laptop",
+        "img": "http://google.com/people.jpg"
+    }
+},
+{"id": 145,
+    "product": {
+        "productName": "DELL",
+        "productSpec": "Core i7",
+        "price": 1200.5,
+        "currency": "$",
+        "type": "laptop",
+        "img": "http://google.com/people.jpg"
+    }
+},
+{"id": 343,
+"product": {
+    "productName": "LENOVO ",
+    "productSpec": "Core i3",
+    "price": 450.5,
+    "currency": "$",
+    "type": "laptop",
+    "img": "http://google.com/people.jpg"
+}
+}
+    ]
