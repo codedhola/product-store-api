@@ -1,5 +1,6 @@
 // IMPORT THE DATA MODELING FROM THE PRODUCT MODEL MODULES
-const { Find, FindById, Create } = require("./productModel");
+const { Find, FindById, Create, Edit, Delete } = require("./productModel");
+const { getData } = require("./utils")
 
 // RETRIEVE ALL PRODUCT
 async function allProducts(req, res){
@@ -33,30 +34,73 @@ async function getProduct(req, res, id){
 async function createProduct(req, res){
 
     try{
-        let body = "";
-        req.on("data", (data) => { // GETS DATA FROM USER BODY 
-            body += data.toString();
-        });
-        
-        req.on("end", async () =>{
+        const body = await getData(req);
 
-            // PARSE DATA INDIVIDUALLY TO IT'S RESPECTIVE VARIABLE
-            const { productName, productSpec, price, currency, type, img } = JSON.parse(body); 
-            const product = {
-                productName,
-                productSpec,
-                price,
-                currency,
-                type,
-                img
-                }
-            const newProduct = await Create(product);  // CREATES PRODUCTS 
-            res.writeHead(201, {"Content-Type": "application/json" })
-            return res.end(JSON.stringify(newProduct)); // SEND PRODUCT 
-        });
+         // PARSE DATA INDIVIDUALLY TO IT'S RESPECTIVE VARIABLE
+         const { productName, productSpec, price, currency, type, img } = JSON.parse(body); 
+         const product = {
+             productName,
+             productSpec,
+             price,
+             currency,
+             type,
+             img
+             }
+         const newProduct = await Create(product);  // CREATES PRODUCTS 
+         res.writeHead(201, {"Content-Type": "application/json" })
+         return res.end(JSON.stringify(newProduct)); // SEND PRODUCT
+
+        }catch(error){
+        console.log(error);
+    }
+}
+
+async function editProduct(req, res, id){
+    try {
+        const product = await FindById(id);
+
+        if(!product){
+            res.writeHead(404, {"Content-Type" : "application/json"});
+            res.end(JSON.stringify({message: " Couldn't find product to edit"}));
+        }else {
+        const body = await getData(req);
+
+         // PARSE DATA INDIVIDUALLY TO IT'S RESPECTIVE VARIABLE
+         const { productName, productSpec, price, currency, type, img } = JSON.parse(body); 
+         const productData = {
+             productName: productName || product.productName,
+             productSpec: productSpec || product.productSpec,
+             price: price || product.price,
+             currency: currency || product.currency,
+             type: type || product.type,
+             img: img || product.img
+             }
+         const updateProduct = await Edit(id, productData);  // CREATES PRODUCTS 
+         res.writeHead(200, {"Content-Type": "application/json" })
+         return res.end(JSON.stringify(updateProduct)); // SEND EDITED PRODUCT
+        }
+
 
     }catch(error){
-        console.log(error);
+        throw error;
+    }
+}
+
+async function deleteProduct(req, res, id){
+    try {
+        const product = await FindById(id);
+
+        if(!product){
+            res.writeHead(404, {"Content-Type" : "application/json"});
+            res.end(JSON.stringify({message: "Could not find product to be deleted"}));
+        }else {
+            await Delete(id);
+            res.writeHead(200, {"Content-Type" : "application/json"});
+            res.end(JSON.stringify({message: "PRODUCT DELETED SUCCESSFULLY"}));
+        }
+
+    }catch(error){
+        throw error;
     }
 }
 
@@ -64,5 +108,7 @@ async function createProduct(req, res){
 module.exports = { 
     allProducts, 
     getProduct,
-    createProduct
+    createProduct,
+    editProduct,
+    deleteProduct
 }

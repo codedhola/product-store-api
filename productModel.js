@@ -1,5 +1,5 @@
 // GET THE DATA FROM DB.JSON 
-const Data = require("./db.json");
+let Data = require("./db.json");
 const { idGenerator, writeData } = require("./utils"); // GET FUNCTIONS CREATED FORM UTILS
 
 // RETURN ALL DATA IN DATABASE
@@ -40,9 +40,13 @@ function Create(product){
     }
 }
 
-function Edit(id){
+function Edit(id, product){
     try {
         return new Promise((resolve, reject) => {
+            const index = Data.findIndex(p => p.id === id);
+            Data[index] = {id, ...product}
+            writeData("./db.json", Data);
+            resolve(Data[index]);
 
         });
     }catch(error){
@@ -50,8 +54,18 @@ function Edit(id){
     }
 }
 
+function Delete(id){
+    return new Promise((resolve, reject) => {
+        Data = Data.filter(p => p.id != id);
+        writeData("./db.json", Data)
+        resolve();
+    })
+}
+
 module.exports = {
     Find,
     FindById,
-    Create
+    Create, 
+    Edit,
+    Delete
 }
