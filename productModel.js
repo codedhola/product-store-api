@@ -44,7 +44,7 @@ function Create(product){
 function Edit(id, product){
     try {
         return new Promise((resolve, reject) => {
-            const index = Data.findIndex(p => p.id === id); // GET DATA 
+            const index = Data.findIndex(p => p.id == id); // GET DATA 
             Data[index] = {id, ...product}      // GET INDEX OF DATA
             writeData("./db.json", Data);       // REWRITEDATA TO DATABSE
             resolve(Data[index]);
