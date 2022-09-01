@@ -40,12 +40,13 @@ function Create(product){
     }
 }
 
+// EDIT A PRODUCT
 function Edit(id, product){
     try {
         return new Promise((resolve, reject) => {
-            const index = Data.findIndex(p => p.id === id);
-            Data[index] = {id, ...product}
-            writeData("./db.json", Data);
+            const index = Data.findIndex(p => p.id === id); // GET DATA 
+            Data[index] = {id, ...product}      // GET INDEX OF DATA
+            writeData("./db.json", Data);       // REWRITEDATA TO DATABSE
             resolve(Data[index]);
 
         });
@@ -54,10 +55,11 @@ function Edit(id, product){
     }
 }
 
+// DELETE A PRODUCT
 function Delete(id){
     return new Promise((resolve, reject) => {
-        Data = Data.filter(p => p.id != id);
-        writeData("./db.json", Data)
+        Data = Data.filter(p => p.id != id);    // DELETE WITH THE FILTER METHOD
+        writeData("./db.json", Data)        // REWRITES DATA TO DB
         resolve();
     })
 }

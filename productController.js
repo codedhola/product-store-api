@@ -55,15 +55,17 @@ async function createProduct(req, res){
     }
 }
 
+//  EDIT A PROUCT FROM DB WITH GIVEN ID
 async function editProduct(req, res, id){
     try {
-        const product = await FindById(id);
+        const product = await FindById(id);  // FIND THE PRODUCT FROM DB WITH ID
 
+        // RESPONSE IF PRODUCT ISN'T FOUND
         if(!product){
             res.writeHead(404, {"Content-Type" : "application/json"});
             res.end(JSON.stringify({message: " Couldn't find product to edit"}));
         }else {
-        const body = await getData(req);
+        const body = await getData(req);    // GET THE DATA FROM USER
 
          // PARSE DATA INDIVIDUALLY TO IT'S RESPECTIVE VARIABLE
          const { productName, productSpec, price, currency, type, img } = JSON.parse(body); 
@@ -75,7 +77,7 @@ async function editProduct(req, res, id){
              type: type || product.type,
              img: img || product.img
              }
-         const updateProduct = await Edit(id, productData);  // CREATES PRODUCTS 
+         const updateProduct = await Edit(id, productData);  // EDITS PRODUCTS 
          res.writeHead(200, {"Content-Type": "application/json" })
          return res.end(JSON.stringify(updateProduct)); // SEND EDITED PRODUCT
         }
@@ -86,17 +88,19 @@ async function editProduct(req, res, id){
     }
 }
 
+// DELETES PRODUCT WITH GIVEN ID FROM THE DB
 async function deleteProduct(req, res, id){
     try {
-        const product = await FindById(id);
+        const product = await FindById(id);  // SEARCH ID FROM DB
 
+        // RESPONSE IF ID ISN'T FOUND
         if(!product){
             res.writeHead(404, {"Content-Type" : "application/json"});
             res.end(JSON.stringify({message: "Could not find product to be deleted"}));
         }else {
-            await Delete(id);
+            await Delete(id);  // DELETE PRODUCT FROM DB
             res.writeHead(200, {"Content-Type" : "application/json"});
-            res.end(JSON.stringify({message: "PRODUCT DELETED SUCCESSFULLY"}));
+            res.end(JSON.stringify({message: "PRODUCT DELETED SUCCESSFULLY"}));  // RESPONSE ONCE SUCCESSFUL
         }
 
     }catch(error){

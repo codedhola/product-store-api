@@ -41,6 +41,7 @@ const server = http.createServer((req, res) => {
         editProduct(req, res, id[3]);
     }
 
+    // @ROUTES => API/PRODUCTS/ID    || <DELETE> A PRODUCT FROM DB
     else if(Url.match(/\/api\/products\/([0-9])+/) && Method === "DELETE"){
         const id = Url.split("/");
         deleteProduct(req, res, id[3]);
