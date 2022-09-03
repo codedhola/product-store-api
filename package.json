@@ -1,0 +1,21 @@
+{
+  "name": "product-store-api",
+  "version": "1.0.0",
+  "description": "A simple CRUD API application for managing products",
+  "main": "productController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codedhola/product-store-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codedhola/product-store-api/issues"
+  },
+  "homepage": "https://github.com/codedhola/product-store-api#readme"
+}
