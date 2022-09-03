@@ -1,5 +1,5 @@
 // GET THE DATA FROM DB.JSON 
-let Data = require("./db.json");
+let Data = require("./db/db.json");
 const { idGenerator, writeData } = require("./utils"); // GET FUNCTIONS CREATED FORM UTILS
 
 // RETURN ALL DATA IN DATABASE

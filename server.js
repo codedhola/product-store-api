@@ -5,7 +5,7 @@ const fs = require("fs");
 const { allProducts, getProduct, createProduct, editProduct, deleteProduct } = require("./productController");
 
 //  REFERENCE FILE SYSTEM TO RENDER HTML
-const html = fs.readFileSync("index.html", "utf-8");
+const html = fs.readFileSync("template/index.html", "utf-8");
 
 // INIT A SERVER
 const server = http.createServer((req, res) => {
